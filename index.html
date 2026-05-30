@@ -383,24 +383,26 @@ gtag('config', 'AW-17383730262');
 
     <script>
         // Função para repassar os parâmetros UTM da URL diretamente para o link do WhatsApp
-        (function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const utmSource = urlParams.get('utm_source');
-            const utmMedium = urlParams.get('utm_medium');
-            const utmCampaign = urlParams.get('utm_campaign');
+       (function() {
+    const waLink = document.getElementById('whatsapp-link');
 
-            if (utmSource || utmMedium || utmCampaign) {
-                const waLink = document.getElementById('whatsapp-link');
-                
-                // Texto base limpo e convertido para string amigável
-               let textoMensagem = "Olá, vi seu anúncio no Google e preciso de um chaveiro urgente!";
-                // Constrói os trackers textuais para leitura interna no painel do seu CRM ou direto no Whatsapp
-                let trackers = `\n\n[Rastreamento: src=${utmSource || 'direto'}|med=${utmMedium || 'none'}|camp=${utmCampaign || 'none'}]`;
-                
-                let linkFinal = "https://wa.me/5545984280286?text=" + encodeURIComponent(textoMensagem + trackers);
-                waLink.setAttribute('href', linkFinal);
-            }
-        })();
+    let textoMensagem = "Olá, vi seu anúncio no Google e preciso de um chaveiro urgente!";
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmSource = urlParams.get('utm_source');
+    const utmMedium = urlParams.get('utm_medium');
+    const utmCampaign = urlParams.get('utm_campaign');
+
+    let trackers = '';
+
+    if (utmSource || utmMedium || utmCampaign) {
+        trackers = `\n\n[Rastreamento: src=${utmSource || 'direto'}|med=${utmMedium || 'none'}|camp=${utmCampaign || 'none'}]`;
+    }
+
+    waLink.href =
+        "https://wa.me/5545984280286?text=" +
+        encodeURIComponent(textoMensagem + trackers);
+})();
 
         // Controle Simples e Rápido do Modal de Privacidade
         function toggleModal(open) {
